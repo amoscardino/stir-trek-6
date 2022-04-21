@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router';
 import useSession from '../hooks/useSession';
 import QueryResultDisplay from '../components/QueryResultDisplay';
 import SessionDetails from '../components/SessionDetails';
+import SavedSessionButton from '../components/SavedSessionButton';
 
 interface SessionPageParams {
     id: string;
@@ -12,13 +13,13 @@ interface SessionPageParams {
 interface SessionPageProps extends RouteComponentProps<SessionPageParams> { }
 
 const SessionPage = ({ match }: SessionPageProps) => {
-    const id = match.params.id;
-    const { session, isSuccess, isLoading, isError } = useSession(id);
+    const { session, isSuccess, isLoading, isError } = useSession(match.params.id);
 
     return (
         <StandardPage
             title="Session"
             showBackButton
+            primaryButton={<SavedSessionButton id={session.id} />}
         >
             <QueryResultDisplay
                 isSuccess={isSuccess}
