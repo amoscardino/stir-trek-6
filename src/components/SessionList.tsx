@@ -1,17 +1,18 @@
 import {
-    IonItem,
     IonItemDivider,
     IonLabel,
     IonList
 } from "@ionic/react";
-import {Fragment} from "react";
+import { Fragment } from "react";
 import { TimeSlot } from "../api/types/stirTrek";
+import SessionListItem from "./SessionListItem";
 
 interface SessionListProps {
     timeSlots: TimeSlot[];
+    showSavedIcons?: boolean;
 }
 
-const SessionList = ({ timeSlots }: SessionListProps) => (
+const SessionList = ({ timeSlots, showSavedIcons }: SessionListProps) => (
     <IonList>
         {timeSlots.map(timeSlot => (
             <Fragment key={timeSlot.time}>
@@ -22,16 +23,12 @@ const SessionList = ({ timeSlots }: SessionListProps) => (
                 </IonItemDivider>
 
                 {timeSlot.sessions.map((session, index) => (
-                    <IonItem
+                    <SessionListItem
                         key={session.id}
-                        detail
-                        routerLink={`/sessions/${session.id}`}
-                        lines={index === timeSlot.sessions.length - 1 ? "none" : undefined}
-                    >
-                        <IonLabel>
-                            {session.title}
-                        </IonLabel>
-                    </IonItem>
+                        session={session}
+                        hideLines={index === timeSlot.sessions.length - 1}
+                        showSavedIcon={showSavedIcons}
+                    />
                 ))}
             </Fragment>
         ))}

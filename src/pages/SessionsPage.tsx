@@ -9,7 +9,7 @@ const SessionsPage = () => {
 
     return (
         <StandardPage
-            title="Sessions"
+            title="All Sessions"
         >
             <QueryResultDisplay
                 isSuccess={isSuccess}
@@ -18,7 +18,7 @@ const SessionsPage = () => {
                 isEmpty={timeSlots.length === 0}
                 successRender={() => (
                     <>
-                        <SessionList timeSlots={timeSlots} />
+                        <SessionList timeSlots={timeSlots} showSavedIcons />
                         <Snowman />
                     </>
                 )}
