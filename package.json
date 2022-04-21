@@ -22,6 +22,7 @@
     "ionicons": "^5.4.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-query": "^3.36.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.0",
@@ -41,10 +42,14 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "eject": "react-scripts eject"
+      "build": "react-scripts build",
+      "serve": "ionic serve --no-open",
+      "xcode": "ionic cap copy ios && ionic cap open ios",
+      "ios-dev": "ionic cap run ios -lc --target 1BD2332F-8C1B-4B9B-8C43-532D8CDD9C43",
+      "ios-prod": "ionic cap run ios --target 1BD2332F-8C1B-4B9B-8C43-532D8CDD9C43",
+      "test": "react-scripts test",
+      "test-watch": "react-scripts test --watchAll",
+      "test-coverage": "react-scripts test --watchAll --coverage"
   },
   "eslintConfig": {
     "extends": [
@@ -67,5 +72,18 @@
   "devDependencies": {
     "@capacitor/cli": "3.4.3"
   },
-  "description": "An Ionic project"
+  "jest": {
+      "resetMocks": true,
+      "transformIgnorePatterns": "node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)",
+      "collectCoverageFrom": [
+          "src/*/**/*.{js,jsx,ts,tsx}",
+          "!src/**/types/*.ts",
+          "!src/**/*.d.ts",
+          "!src/**/tests/*.{js,jsx,ts,tsx}"
+      ],
+      "coverageReporters": [
+          "text",
+          "html"
+      ]
+  }
 }

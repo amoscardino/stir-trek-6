@@ -1,42 +1,52 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import {
+    IonApp,
+    IonIcon,
+    IonLabel,
+    IonRouterOutlet,
+    IonTabBar,
+    IonTabButton,
+    IonTabs,
+    setupIonicReact
+} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
-
-/* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
-
-/* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
-
-/* Theme variables */
-import './theme/variables.css';
+import { megaphoneOutline, timeOutline } from 'ionicons/icons';
+import { QueryClientProvider } from 'react-query';
+import SchedulePage from './pages/SchedulePage';
+import SessionPage from './pages/SessionPage';
+import SessionsPage from './pages/SessionsPage';
+import queryClient from './utils/queryClient';
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+const App = () => (
+    <IonApp>
+        <QueryClientProvider client={queryClient}>
+            <IonReactRouter>
+                <IonTabs>
+                    <IonRouterOutlet>
+                        <Route path="/:tab(schedule)" component={SchedulePage} exact={true} />
+                        <Route path="/:tab(schedule)/:id" component={SessionPage} exact={true} />
+                        <Route path="/:tab(sessions)" component={SessionsPage} exact={true} />
+                        <Route path="/:tab(sessions)/:id" component={SessionPage} exact={true} />
+                        <Redirect exact from="/" to="/schedule" />
+                    </IonRouterOutlet>
+
+                    <IonTabBar slot="bottom">
+                        <IonTabButton tab="schedule" href="/schedule">
+                            <IonIcon icon={timeOutline} />
+                            <IonLabel>Schedule</IonLabel>
+                        </IonTabButton>
+
+                        <IonTabButton tab="sessions" href="/sessions">
+                            <IonIcon icon={megaphoneOutline} />
+                            <IonLabel>Sessions</IonLabel>
+                        </IonTabButton>
+                    </IonTabBar>
+                </IonTabs>
+            </IonReactRouter>
+        </QueryClientProvider>
+    </IonApp>
 );
 
 export default App;

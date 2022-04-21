@@ -1,0 +1,30 @@
+.center {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Fix for refresher being hidden by the toolbar */
+ion-app.ios ion-refresher.refresher-active {
+    z-index: 1;
+}
+
+/* Fix for some dark-mode list weirdness on iOS */
+@media (prefers-color-scheme: dark) {
+    ion-app.ios ion-card ion-item {
+        --background: var(
+            --ion-card-background,
+            var(--ion-item-background, var(--ion-background-color, #fff))
+        );
+    }
+
+    ion-app.ios ion-modal ion-list,
+    ion-app.ios ion-modal ion-list.list-ios,
+    ion-app.ios ion-modal ion-list ion-item,
+    ion-app.ios ion-modal ion-list ion-list-header {
+        --background: transparent;
+        background: transparent;
+    }
+}
