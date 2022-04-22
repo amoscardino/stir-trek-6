@@ -1,5 +1,4 @@
 import { useQuery } from 'react-query';
-import { getSavedSessionIds } from '../api/savedSessions';
 import { getSavedSessions } from "../api/stirTrek";
 import { TimeSlot } from "../api/types/stirTrek";
 import { QueryResult } from "../types/results";
@@ -11,25 +10,17 @@ interface UseSavedSessionsResult extends QueryResult {
 
 const useSavedSessions = (): UseSavedSessionsResult => {
     const {
-        data: savedSessionIds,
-        isLoading: savedSessionsLoading,
-        refetch
-    } = useQuery('saved-sessions', () => getSavedSessionIds());
-
-    const savedIds = savedSessionIds || [];
-
-    const {
         data: timeSlots,
         isSuccess,
         isLoading,
         isError,
+        refetch
     } = useQuery({
-        queryKey: ['saved-sessions', 'with-ids', ...savedIds],
-        queryFn: () => getSavedSessions(savedIds),
-        enabled: !savedSessionsLoading
+        queryKey: ['saved-sessions'],
+        queryFn: () => getSavedSessions()
     });
 
-    const refresh = async (): Promise<void> => {
+    const refresh = async () => {
         await refetch();
     };
 

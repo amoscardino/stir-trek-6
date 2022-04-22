@@ -1,13 +1,14 @@
 import {
-     IonCard,
-      IonCardContent,
-      IonCardHeader, 
-      IonCardSubtitle,
-      IonCardTitle,
-      IonItem,
-      IonLabel,
-      IonList
-    } from "@ionic/react";
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonNote
+} from "@ionic/react";
 import { Session } from "../api/types/stirTrek";
 import './SessionDetails.css';
 
@@ -31,14 +32,33 @@ const SessionDetails = ({ session }: SessionDetailsProps) => (
                 {session.description}
             </IonCardContent>
 
-            <IonItem lines="none">
+            <IonItem>
                 <IonLabel>
                     Room
                 </IonLabel>
-                <IonLabel className="ion-text-end">
+                <IonNote slot="end">
                     {session.room}
-                </IonLabel>
+                </IonNote>
             </IonItem>
+
+            {session.theatres.length > 0 && (
+                <IonItem lines="none">
+                    <IonLabel>
+                        Theatres
+                    </IonLabel>
+
+                    {session.theatres.map(theatre => (
+                        <IonNote
+                            key={theatre}
+                            slot="end"
+                            color={theatre === session.speakerTheatre ? "primary" : ""}
+                            className={theatre === session.speakerTheatre ? "text-bold text-underline" : ""}
+                        >
+                            {theatre}
+                        </IonNote>
+                    ))}
+                </IonItem>
+            )}
         </IonCard>
 
         {session.speakers.map(speaker => (

@@ -13,13 +13,13 @@ interface SessionPageParams {
 interface SessionPageProps extends RouteComponentProps<SessionPageParams> { }
 
 const SessionPage = ({ match }: SessionPageProps) => {
-    const { session, isSuccess, isLoading, isError } = useSession(match.params.id);
+    const { session, isSuccess, isLoading, isError, refresh } = useSession(match.params.id);
 
     return (
         <StandardPage
             title="Session"
             showBackButton
-            primaryButton={<SavedSessionButton id={session.id} />}
+            primaryButton={<SavedSessionButton session={session} onChange={refresh} />}
         >
             <QueryResultDisplay
                 isSuccess={isSuccess}

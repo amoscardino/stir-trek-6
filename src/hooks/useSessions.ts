@@ -5,16 +5,28 @@ import { QueryResult } from "../types/results";
 
 interface UseSessionsResult extends QueryResult {
     timeSlots: TimeSlot[];
+    refresh: () => Promise<void>;
 }
 
 const useSessions = (): UseSessionsResult => {
-    const { data, isSuccess, isLoading, isError } = useQuery('sessions', () => getSessions());
+    const {
+        data,
+        isSuccess,
+        isLoading,
+        isError,
+        refetch
+    } = useQuery('sessions', () => getSessions());
+
+    const refresh = async() => {
+        await refetch();
+    };
 
     return {
         timeSlots: data || [],
         isSuccess,
         isLoading,
-        isError
+        isError,
+        refresh
     } as UseSessionsResult;
 };
 

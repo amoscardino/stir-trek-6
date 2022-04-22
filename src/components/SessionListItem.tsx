@@ -1,7 +1,6 @@
 import { IonIcon, IonItem, IonLabel } from "@ionic/react";
 import { bookmark } from "ionicons/icons";
 import { Session } from "../api/types/stirTrek";
-import useSavedSession from "../hooks/useSavedSession";
 
 interface SessionListItemProps {
     session: Session;
@@ -10,11 +9,8 @@ interface SessionListItemProps {
 }
 
 const SessionListItem = ({ session, showSavedIcon, hideLines }: SessionListItemProps) => {
-    const { isSaved } = useSavedSession(session.id);
-
     return (
         <IonItem
-            key={session.id}
             detail
             routerLink={`/sessions/${session.id}`}
             lines={hideLines ? "none" : undefined}
@@ -29,10 +25,10 @@ const SessionListItem = ({ session, showSavedIcon, hideLines }: SessionListItemP
                 )}
             </IonLabel>
 
-            {showSavedIcon && (
+            {showSavedIcon && session.isSaved && (
                 <IonIcon
-                    icon={isSaved ? bookmark : ""}
-                    slot="start"
+                    icon={bookmark}
+                    slot="end"
                     color="primary"
                 />
             )}

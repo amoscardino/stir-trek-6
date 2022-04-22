@@ -1,24 +1,25 @@
 import { IonButton, IonIcon } from "@ionic/react";
 import { bookmark, bookmarkOutline } from "ionicons/icons";
-import useSavedSession from "../hooks/useSavedSession";
+import { toggleSavedSession } from "../api/savedSessions";
+import { Session } from "../api/types/stirTrek";
 
 interface SavedSessionButtonProps {
-    id: string;
+    session: Session;
+    onChange: () => void;
 }
 
-const SavedSessionButton = ({ id }: SavedSessionButtonProps) => {
-    const { isSaved, toggleSaved } = useSavedSession(id);
-
+const SavedSessionButton = ({ session, onChange }: SavedSessionButtonProps) => {
     const handleButtonClick = async (): Promise<void> => {
-        await toggleSaved();
+        await toggleSavedSession(session.id);
+        onChange();
     };
 
     return (
         <IonButton
-            title={isSaved ? "Remove saved session" : "Add saved session"}
+            title={session.isSaved ? "Remove saved session" : "Add saved session"}
             onClick={handleButtonClick}
         >
-            <IonIcon slot="icon-only" icon={isSaved ? bookmark : bookmarkOutline} />
+            <IonIcon slot="icon-only" icon={session.isSaved ? bookmark : bookmarkOutline} />
         </IonButton>
     );
 };

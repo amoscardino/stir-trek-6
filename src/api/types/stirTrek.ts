@@ -8,8 +8,11 @@ export interface Session {
     title: string;
     description: string;
     room: string;
+    theatres: number[];
+    speakerTheatre?: number;
     speakers: Speaker[];
     categories: string[];
+    isSaved: boolean;
 }
 
 export interface Speaker{

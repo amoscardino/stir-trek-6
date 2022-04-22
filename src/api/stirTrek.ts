@@ -1,3 +1,4 @@
+import { getSavedSessionIds } from "./savedSessions";
 import { Session, Speaker, SpeakerLink, TimeSlot } from "./types/stirTrek";
 
 const SCHEDULE_URL = process.env.REACT_APP_SCHEDULE_URL || '';
@@ -10,59 +11,111 @@ const getSessions = async (): Promise<TimeSlot[]> => {
     if (!scheduleResponse.ok || !sessionsResponse.ok)
         throw new Error('Unable to load data');
 
-    var scheduleData = await scheduleResponse.json();
-    var sessionData = await sessionsResponse.json();
-
-    console.log(scheduleData);
-    console.log(sessionData);
-
+    const scheduleData = await scheduleResponse.json();
+    const sessionData = await sessionsResponse.json();
+    const savedSessionIds = await getSavedSessionIds();
     const categories = sessionData.categories.map((category: any) => category.items).flat();
 
-    return scheduleData.scheduledSessions.timeSlots.map((timeSlotData: any) => {
-        return {
-            time: timeSlotData.time,
-            sessions: timeSlotData.sessions.map((timeSlotSession: any) => {
-                const [session] = sessionData.sessions.filter((x: any) => x.id === timeSlotSession.id);
+    return scheduleData.scheduledSessions.timeSlots.map((timeSlotData: any) => ({
+        time: timeSlotData.time,
+        sessions: timeSlotData.sessions.map((timeSlotSession: any) => {
+            const [session] = sessionData.sessions.filter((x: any) => x.id === timeSlotSession.id);
 
-                return {
-                    id: timeSlotSession.id,
-                    title: session.title,
-                    description: session.description || '',
-                    room: timeSlotSession.scheduledRoom,
-                    speakers: sessionData.speakers
-                        .filter((speaker: any) => session.speakers.indexOf(speaker.id) !== -1)
-                        .map((speaker: any) => {
-                            return {
-                                id: speaker.id,
-                                name: speaker.fullName,
-                                bio: speaker.bio,
-                                title: speaker.tagLine,
-                                pictureUrl: speaker.profilePicture,
-                                links: speaker.links.map((link: any) => {
-                                    return {
-                                        title: link.title,
-                                        url: link.url
-                                    } as SpeakerLink;
-                                })
-                            } as Speaker;
-                        }),
-                    categories: categories
-                        .filter((category: any) => session.categoryItems.indexOf(category.id) !== -1)
-                        .map((category: any) => category.name)
-                } as Session;
-            })
-        } as TimeSlot;
-    });
+            return {
+                id: timeSlotSession.id,
+                title: session.title,
+                description: session.description || '',
+                room: timeSlotSession.scheduledRoom,
+                theatres: getTheatres(timeSlotSession.scheduledRoom),
+                speakerTheatre: getSpeakerTheatre(timeSlotSession.scheduledRoom),
+                speakers: getSessionSpeakers(sessionData, session),
+                categories: getSessionCategories(categories, session),
+                isSaved: savedSessionIds.indexOf(timeSlotSession.id) !== -1
+            } as Session;
+        })
+    } as TimeSlot));
 };
 
-const getSavedSessions = async (ids: string[]): Promise<TimeSlot[]> => {
+const getTheatres = (room: string): number[] => {
+    switch (room.toLowerCase()) {
+        case 'cgi':
+            return [4, 5, 6, 7, 8, 9];
+        case 'upstart':
+            return [1, 2, 3];
+        case 'revel it':
+            return [10, 11, 15];
+        case 'cas':
+            return [12, 13, 14];
+        case 'dmg':
+            return [16, 21];
+        case 'daugherty':
+            return [17, 20];
+        case 'impact':
+            return [23, 24, 25, 26, 27];
+        case 'aware':
+            return [18, 19, 28];
+        default:
+            return [];
+    }
+};
+
+const getSpeakerTheatre = (room: string): number | null => {
+    switch (room.toLowerCase()) {
+        case 'cgi':
+            return 4;
+        case 'upstart':
+            return 3;
+        case 'revel it':
+            return 15;
+        case 'cas':
+            return 14;
+        case 'dmg':
+            return 16;
+        case 'daugherty':
+            return 17;
+        case 'impact':
+            return 27;
+        case 'aware':
+            return 28;
+        default:
+            return null;
+    }
+};
+
+const getSessionSpeakers = (sessionData: any, session: any): Speaker[] => {
+    return sessionData.speakers
+        .filter((speaker: any) => session.speakers.indexOf(speaker.id) !== -1)
+        .map((speaker: any) => {
+            return {
+                id: speaker.id,
+                name: speaker.fullName,
+                bio: speaker.bio,
+                title: speaker.tagLine,
+                pictureUrl: speaker.profilePicture,
+                links: speaker.links.map((link: any) => {
+                    return {
+                        title: link.title,
+                        url: link.url
+                    } as SpeakerLink;
+                })
+            } as Speaker;
+        });
+}
+
+const getSessionCategories = (categories: any, session: any): string[] => {
+    return categories
+        .filter((category: any) => session.categoryItems.indexOf(category.id) !== -1)
+        .map((category: any) => category.name);
+};
+
+const getSavedSessions = async (): Promise<TimeSlot[]> => {
     const timeSlots = await getSessions();
 
     return timeSlots
         .map(timeSlot => {
             return {
                 ...timeSlot,
-                sessions: timeSlot.sessions.filter(session => ids.indexOf(session.id) !== -1)
+                sessions: timeSlot.sessions.filter(session => session.isSaved)
             }
         })
         .filter(timeSlot => timeSlot.sessions.length > 0);
@@ -84,3 +137,4 @@ export {
     getSavedSessions,
     getSession
 };
+

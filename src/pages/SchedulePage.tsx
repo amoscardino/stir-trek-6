@@ -3,10 +3,15 @@ import Snowman from '../components/Snowman';
 import QueryResultDisplay from '../components/QueryResultDisplay';
 import SessionList from '../components/SessionList';
 import useSavedSessions from '../hooks/useSavedSessions';
+import { useIonViewDidEnter } from '@ionic/react';
 
 const SchedulePage = () => {
     const { timeSlots, isSuccess, isLoading, isError, refresh } = useSavedSessions();
-    
+
+    useIonViewDidEnter(async () => {
+        await refresh();
+    });
+
     return (
         <StandardPage
             title="My Schedule"

@@ -4,17 +4,23 @@ import { Session } from '../api/types/stirTrek';
 import { QueryResult } from "../types/results";
 
 interface UseSessionResult extends QueryResult {
-    session: Session
+    session: Session;
+    refresh: () => Promise<void>;
 }
 
 const useSession = (id: string): UseSessionResult => {
-    const { data, isSuccess, isLoading, isError } = useQuery(['session', id], () => getSession(id));
+    const { data, isSuccess, isLoading, isError, refetch } = useQuery(['session', id], () => getSession(id));
+
+    const refresh = async () => {
+        await refetch()
+    };
 
     return {
         session: data || {},
         isSuccess,
         isLoading,
-        isError
+        isError,
+        refresh
     } as UseSessionResult;
 };
 

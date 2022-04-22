@@ -6,6 +6,14 @@
     height: 100%;
 }
 
+.text-bold {
+    font-weight: bolder;
+}
+
+.text-underline {
+    text-decoration: underline;
+}
+
 /* Fix for refresher being hidden by the toolbar */
 ion-app.ios ion-refresher.refresher-active {
     z-index: 1;

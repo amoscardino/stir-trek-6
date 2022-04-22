@@ -3,13 +3,19 @@ import Snowman from '../components/Snowman';
 import useSessions from '../hooks/useSessions';
 import QueryResultDisplay from '../components/QueryResultDisplay';
 import SessionList from '../components/SessionList';
+import { useIonViewDidEnter } from '@ionic/react';
 
 const SessionsPage = () => {
-    const { timeSlots, isSuccess, isLoading, isError } = useSessions();
+    const { timeSlots, isSuccess, isLoading, isError, refresh } = useSessions();
+
+    useIonViewDidEnter(async () => {
+        await refresh();
+    });
 
     return (
         <StandardPage
             title="All Sessions"
+            onPullToRefresh={refresh}
         >
             <QueryResultDisplay
                 isSuccess={isSuccess}
