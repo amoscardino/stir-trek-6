@@ -9,6 +9,7 @@ import {
     IonList,
     IonNote
 } from "@ionic/react";
+import ReactMarkdown from 'react-markdown'
 import { Session } from "../api/types/stirTrek";
 import './SessionDetails.css';
 
@@ -29,7 +30,9 @@ const SessionDetails = ({ session }: SessionDetailsProps) => (
             </IonCardHeader>
 
             <IonCardContent>
-                {session.description}
+                <ReactMarkdown>
+                    {session.description}
+                </ReactMarkdown>
             </IonCardContent>
 
             <IonItem>
@@ -82,7 +85,9 @@ const SessionDetails = ({ session }: SessionDetailsProps) => (
                 </IonCardHeader>
 
                 <IonCardContent>
-                    {speaker.bio}
+                    <ReactMarkdown>
+                        {speaker.bio}
+                    </ReactMarkdown>
                 </IonCardContent>
 
                 {speaker.links.length > 0 && (
