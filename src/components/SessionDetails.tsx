@@ -19,7 +19,7 @@ interface SessionDetailsProps {
 
 const SessionDetails = ({ session }: SessionDetailsProps) => (
     <>
-        <IonCard>
+        <IonCard className="session-detail-card">
             <IonCardHeader>
                 <IonCardSubtitle>
                     {session.categories.join(', ')}

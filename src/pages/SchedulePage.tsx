@@ -4,8 +4,11 @@ import QueryResultDisplay from '../components/QueryResultDisplay';
 import SessionList from '../components/SessionList';
 import useSavedSessions from '../hooks/useSavedSessions';
 import { useIonViewDidEnter } from '@ionic/react';
+import { RouteComponentProps } from 'react-router';
 
-const SchedulePage = () => {
+interface SchedulePageProps extends RouteComponentProps { }
+
+const SchedulePage = ({ match }: SchedulePageProps) => {
     const { timeSlots, isSuccess, isLoading, isError, refresh } = useSavedSessions();
 
     useIonViewDidEnter(async () => {
@@ -24,7 +27,7 @@ const SchedulePage = () => {
                 isEmpty={timeSlots.length === 0}
                 successRender={() => (
                     <>
-                        <SessionList timeSlots={timeSlots} />
+                        <SessionList timeSlots={timeSlots} path={match.url} />
                         <Snowman />
                     </>
                 )}

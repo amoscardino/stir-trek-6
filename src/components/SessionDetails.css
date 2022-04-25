@@ -4,3 +4,9 @@
     margin: 16px auto;
     border-radius: 120px;
 }
+
+@media (prefers-color-scheme: dark) {
+    .session-detail-card ion-note:not(.ion-color) {
+        color: var(--ion-color-step-600);
+    }
+}

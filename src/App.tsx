@@ -17,7 +17,7 @@ import SessionPage from './pages/SessionPage';
 import SessionsPage from './pages/SessionsPage';
 import queryClient from './utils/queryClient';
 
-setupIonicReact();
+setupIonicReact({ mode: "ios" });
 
 const App = () => (
     <IonApp>

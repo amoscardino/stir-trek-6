@@ -10,9 +10,10 @@ import SessionListItem from "./SessionListItem";
 interface SessionListProps {
     timeSlots: TimeSlot[];
     showSavedIcons?: boolean;
+    path: string;
 }
 
-const SessionList = ({ timeSlots, showSavedIcons }: SessionListProps) => (
+const SessionList = ({ timeSlots, showSavedIcons, path }: SessionListProps) => (
     <IonList>
         {timeSlots.map(timeSlot => (
             <Fragment key={timeSlot.time}>
@@ -28,6 +29,7 @@ const SessionList = ({ timeSlots, showSavedIcons }: SessionListProps) => (
                         session={session}
                         hideLines={index === timeSlot.sessions.length - 1}
                         showSavedIcon={showSavedIcons}
+                        path={path}
                     />
                 ))}
             </Fragment>

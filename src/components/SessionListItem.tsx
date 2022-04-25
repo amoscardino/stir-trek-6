@@ -6,13 +6,14 @@ interface SessionListItemProps {
     session: Session;
     hideLines: boolean
     showSavedIcon?: boolean;
+    path: string;
 }
 
-const SessionListItem = ({ session, showSavedIcon, hideLines }: SessionListItemProps) => {
+const SessionListItem = ({ session, showSavedIcon, hideLines, path }: SessionListItemProps) => {
     return (
         <IonItem
             detail
-            routerLink={`/sessions/${session.id}`}
+            routerLink={`${path}/${session.id}`}
             lines={hideLines ? "none" : undefined}
         >
             <IonLabel>
