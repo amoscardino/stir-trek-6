@@ -68,14 +68,14 @@ const StandardPage = forwardRef<HTMLElement, StandardPageProps>((props, ref) => 
                         </IonButtons>
                     )}
 
-                    <IonTitle>{props.title}</IonTitle>
+                    <IonTitle color="primary">{props.title}</IonTitle>
                 </IonToolbar>
             </IonHeader>
 
             <IonContent fullscreen>
                 <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonTitle size="large">{props.title}</IonTitle>
+                        <IonTitle size="large" color="primary">{props.title}</IonTitle>
                     </IonToolbar>
                 </IonHeader>
 

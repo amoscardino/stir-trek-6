@@ -5,6 +5,7 @@ import {
 } from "@ionic/react";
 import { Fragment } from "react";
 import { TimeSlot } from "../api/types/stirTrek";
+import { sessionSort } from "../utils/session";
 import SessionListItem from "./SessionListItem";
 
 interface SessionListProps {
@@ -23,15 +24,17 @@ const SessionList = ({ timeSlots, showSavedIcons, path }: SessionListProps) => (
                     </IonLabel>
                 </IonItemDivider>
 
-                {timeSlot.sessions.map((session, index) => (
-                    <SessionListItem
-                        key={session.id}
-                        session={session}
-                        hideLines={index === timeSlot.sessions.length - 1}
-                        showSavedIcon={showSavedIcons}
-                        path={path}
-                    />
-                ))}
+                {timeSlot.sessions
+                    .sort(sessionSort)
+                    .map((session, index) => (
+                        <SessionListItem
+                            key={session.id}
+                            session={session}
+                            hideLines={index === timeSlot.sessions.length - 1}
+                            showSavedIcon={showSavedIcons}
+                            path={path}
+                        />
+                    ))}
             </Fragment>
         ))}
     </IonList>

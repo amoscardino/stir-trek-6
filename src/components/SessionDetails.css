@@ -1,3 +1,13 @@
+.session-icon {
+    text-align: center;
+    padding-top: 16px;
+}
+
+.session-icon ion-icon {
+    width: 120px;
+    height: 120px;
+}
+
 .speaker-image {
     display: block;
     max-width: 120px;

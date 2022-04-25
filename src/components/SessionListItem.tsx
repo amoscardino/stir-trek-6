@@ -1,6 +1,7 @@
 import { IonIcon, IonItem, IonLabel } from "@ionic/react";
 import { bookmark } from "ionicons/icons";
 import { Session } from "../api/types/stirTrek";
+import { getIcon } from "../utils/session";
 
 interface SessionListItemProps {
     session: Session;
@@ -16,6 +17,12 @@ const SessionListItem = ({ session, showSavedIcon, hideLines, path }: SessionLis
             routerLink={`${path}/${session.id}`}
             lines={hideLines ? "none" : undefined}
         >
+            <IonIcon
+                icon={getIcon(session)}
+                slot="start"
+                color="primary"
+            />
+
             <IonLabel>
                 <h2>
                     {session.title}

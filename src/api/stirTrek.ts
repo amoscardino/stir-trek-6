@@ -1,10 +1,42 @@
+import { Storage } from '@capacitor/storage';
+import {
+    addHours,
+    formatISO,
+    isAfter,
+    parseISO
+} from 'date-fns';
 import { getSavedSessionIds } from "./savedSessions";
-import { Session, Speaker, SpeakerLink, TimeSlot } from "./types/stirTrek";
+import {
+    Session,
+    Speaker,
+    SpeakerLink,
+    TimeSlot
+} from "./types/stirTrek";
 
+const CACHE_KEY_DATE = 'ST.Cache.Date';
+const CACHE_KEY_SCHEDULE = 'ST.Cache.Schedule';
+const CACHE_KEY_SESSIONS = 'ST.Cache.Sessions';
 const SCHEDULE_URL = process.env.REACT_APP_SCHEDULE_URL || '';
 const SESSIONS_URL = process.env.REACT_APP_SESSIONS_URL || '';
 
-const getSessions = async (): Promise<TimeSlot[]> => {
+const getData = async (): Promise<any[]> => {
+    const { value: cacheDate } = await Storage.get({ key: CACHE_KEY_DATE });
+    const { value: scheduleCacheData } = await Storage.get({ key: CACHE_KEY_SCHEDULE });
+    const { value: sessionCacheData } = await Storage.get({ key: CACHE_KEY_SESSIONS });
+
+    if (cacheDate && cacheDate.length > 0
+        && scheduleCacheData && scheduleCacheData.length > 0
+        && sessionCacheData && sessionCacheData.length > 0) {
+        const parseDate = addHours(parseISO(cacheDate), 1);
+
+        if (isAfter(parseDate, new Date())) {
+            return [
+                JSON.parse(scheduleCacheData),
+                JSON.parse(sessionCacheData)
+            ];
+        }
+    }
+
     const promises = [fetch(SCHEDULE_URL), fetch(SESSIONS_URL)];
     const [scheduleResponse, sessionsResponse] = await Promise.all(promises);
 
@@ -13,27 +45,12 @@ const getSessions = async (): Promise<TimeSlot[]> => {
 
     const scheduleData = await scheduleResponse.json();
     const sessionData = await sessionsResponse.json();
-    const savedSessionIds = await getSavedSessionIds();
-    const categories = sessionData.categories.map((category: any) => category.items).flat();
 
-    return scheduleData.scheduledSessions.timeSlots.map((timeSlotData: any) => ({
-        time: timeSlotData.time,
-        sessions: timeSlotData.sessions.map((timeSlotSession: any) => {
-            const [session] = sessionData.sessions.filter((x: any) => x.id === timeSlotSession.id);
+    await Storage.set({ key: CACHE_KEY_DATE, value: formatISO(new Date()) });
+    await Storage.set({ key: CACHE_KEY_SCHEDULE, value: JSON.stringify(scheduleData) });
+    await Storage.set({ key: CACHE_KEY_SESSIONS, value: JSON.stringify(sessionData) });
 
-            return {
-                id: timeSlotSession.id,
-                title: session.title,
-                description: session.description || '',
-                room: timeSlotSession.scheduledRoom,
-                theatres: getTheatres(timeSlotSession.scheduledRoom),
-                speakerTheatre: getSpeakerTheatre(timeSlotSession.scheduledRoom),
-                speakers: getSessionSpeakers(sessionData, session),
-                categories: getSessionCategories(categories, session),
-                isSaved: savedSessionIds.indexOf(timeSlotSession.id) !== -1
-            } as Session;
-        })
-    } as TimeSlot));
+    return [scheduleData, sessionData];
 };
 
 const getTheatres = (room: string): number[] => {
@@ -108,6 +125,32 @@ const getSessionCategories = (categories: any, session: any): string[] => {
         .map((category: any) => category.name);
 };
 
+const getSessions = async (): Promise<TimeSlot[]> => {
+    const [scheduleData, sessionData] = await getData();
+
+    const savedSessionIds = await getSavedSessionIds();
+    const categories = sessionData.categories.map((category: any) => category.items).flat();
+
+    return scheduleData.scheduledSessions.timeSlots.map((timeSlotData: any) => ({
+        time: timeSlotData.time,
+        sessions: timeSlotData.sessions.map((timeSlotSession: any) => {
+            const [session] = sessionData.sessions.filter((x: any) => x.id === timeSlotSession.id);
+
+            return {
+                id: timeSlotSession.id,
+                title: session.title,
+                description: session.description || '',
+                room: timeSlotSession.scheduledRoom,
+                theatres: getTheatres(timeSlotSession.scheduledRoom),
+                speakerTheatre: getSpeakerTheatre(timeSlotSession.scheduledRoom),
+                speakers: getSessionSpeakers(sessionData, session),
+                categories: getSessionCategories(categories, session),
+                isSaved: savedSessionIds.indexOf(timeSlotSession.id) !== -1
+            } as Session;
+        })
+    } as TimeSlot));
+};
+
 const getSavedSessions = async (): Promise<TimeSlot[]> => {
     const timeSlots = await getSessions();
 
@@ -132,9 +175,16 @@ const getSession = async (id: string): Promise<Session> => {
     return session;
 };
 
+const clearApiCache = async () => {
+    await Storage.remove({ key: CACHE_KEY_DATE });
+    await Storage.remove({ key: CACHE_KEY_SCHEDULE });
+    await Storage.remove({ key: CACHE_KEY_SESSIONS });
+};
+
 export {
     getSessions,
     getSavedSessions,
-    getSession
+    getSession,
+    clearApiCache
 };
 

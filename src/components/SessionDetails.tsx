@@ -4,6 +4,7 @@ import {
     IonCardHeader,
     IonCardSubtitle,
     IonCardTitle,
+    IonIcon,
     IonItem,
     IonLabel,
     IonList,
@@ -11,6 +12,7 @@ import {
 } from "@ionic/react";
 import ReactMarkdown from 'react-markdown'
 import { Session } from "../api/types/stirTrek";
+import { getIcon } from "../utils/session";
 import './SessionDetails.css';
 
 interface SessionDetailsProps {
@@ -20,6 +22,10 @@ interface SessionDetailsProps {
 const SessionDetails = ({ session }: SessionDetailsProps) => (
     <>
         <IonCard className="session-detail-card">
+            <div className="session-icon">
+                <IonIcon icon={getIcon(session)} color="primary" />
+            </div>
+
             <IonCardHeader>
                 <IonCardSubtitle>
                     {session.categories.join(', ')}
@@ -35,7 +41,7 @@ const SessionDetails = ({ session }: SessionDetailsProps) => (
                 </ReactMarkdown>
             </IonCardContent>
 
-            <IonItem>
+            <IonItem lines={session.theatres.length === 0 ? "none" : undefined}>
                 <IonLabel>
                     Room
                 </IonLabel>
