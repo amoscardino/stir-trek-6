@@ -48,7 +48,7 @@ const AboutPage = () => (
         <IonCard>
             <IonCardHeader>
                 <IonCardSubtitle>
-                    App Version 6.0.0
+                    App Version {process.env.REACT_APP_VERSION}
                 </IonCardSubtitle>
             </IonCardHeader>
             <IonCardContent>
