@@ -5,7 +5,7 @@ interface ErrorMessageProps extends WithChildrenProps {}
 
 const ErrorMessage = ({ children }: ErrorMessageProps) => (
     <div className="ion-padding ion-text-center center">
-        <IonText color="danger">
+        <IonText color="danger" className="ion-padding">
             {children}
         </IonText>
     </div>

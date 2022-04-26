@@ -1,6 +1,5 @@
 import {
     barChartOutline,
-    brushOutline,
     bugOutline,
     calendarClearOutline,
     cloudOutline,

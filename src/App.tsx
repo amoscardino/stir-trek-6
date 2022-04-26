@@ -10,14 +10,15 @@ import {
     setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { megaphoneOutline, timeOutline } from 'ionicons/icons';
+import { informationCircleOutline, megaphoneOutline, timeOutline } from 'ionicons/icons';
 import { QueryClientProvider } from 'react-query';
 import SchedulePage from './pages/SchedulePage';
 import SessionPage from './pages/SessionPage';
 import SessionsPage from './pages/SessionsPage';
 import queryClient from './utils/queryClient';
+import AboutPage from './pages/AboutPage';
 
-setupIonicReact({ mode: "ios" });
+setupIonicReact();
 
 const App = () => (
     <IonApp>
@@ -29,6 +30,7 @@ const App = () => (
                         <Route path="/:tab(schedule)/:id" component={SessionPage} exact={true} />
                         <Route path="/:tab(sessions)" component={SessionsPage} exact={true} />
                         <Route path="/:tab(sessions)/:id" component={SessionPage} exact={true} />
+                        <Route path="/:tab(about)" component={AboutPage} exact={true} />
                         <Redirect exact from="/" to="/schedule" />
                     </IonRouterOutlet>
 
@@ -41,6 +43,11 @@ const App = () => (
                         <IonTabButton tab="sessions" href="/sessions">
                             <IonIcon icon={megaphoneOutline} />
                             <IonLabel>Sessions</IonLabel>
+                        </IonTabButton>
+
+                        <IonTabButton tab="about" href="/about">
+                            <IonIcon icon={informationCircleOutline} />
+                            <IonLabel>About</IonLabel>
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>

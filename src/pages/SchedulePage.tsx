@@ -31,7 +31,14 @@ const SchedulePage = ({ match }: SchedulePageProps) => {
                         <Snowman />
                     </>
                 )}
-                emptyRender={() => "No sessions to display."}
+                emptyRender={() => (
+                    <>
+                        You don't have any saved sessions.
+                        <br />
+                        <br />
+                        Go to the Sessions tab to start building your schedule.
+                    </>
+                )}
                 errorMessage="Unable to load sessions."
             />
         </StandardPage>

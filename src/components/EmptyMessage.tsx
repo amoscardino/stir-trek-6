@@ -5,7 +5,7 @@ interface EmptyMessageProps extends WithChildrenProps { }
 
 const EmptyMessage = ({ children }: EmptyMessageProps) => (
     <div className="ion-padding ion-text-center center">
-        <IonText color="medium">
+        <IonText color="medium" className="ion-padding">
             {children}
         </IonText>
     </div>
