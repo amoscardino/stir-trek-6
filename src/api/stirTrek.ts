@@ -67,7 +67,7 @@ const getTheatres = (room: string): number[] => {
             return [16, 21];
         case 'daugherty':
             return [17, 20];
-        case 'impact':
+        case 'impact.com':
             return [23, 24, 25, 26, 27];
         case 'aware':
             return [18, 19, 28];
@@ -90,10 +90,10 @@ const getSpeakerTheatre = (room: string): number | null => {
             return 16;
         case 'daugherty':
             return 17;
-        case 'impact':
+        case 'impact.com':
             return 27;
         case 'aware':
-            return 28;
+            return 29;
         default:
             return null;
     }
