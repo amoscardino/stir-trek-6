@@ -1,5 +1,5 @@
 import StandardPage from '../components/StandardPage';
-import Snowman from '../components/Snowman';
+import ListFooter from '../components/ListFooter';
 import useSessions from '../hooks/useSessions';
 import QueryResultDisplay from '../components/QueryResultDisplay';
 import SessionList from '../components/SessionList';
@@ -28,7 +28,7 @@ const SessionsPage = ({ match }: SessionsPageProps) => {
                 successRender={() => (
                     <>
                         <SessionList timeSlots={timeSlots} showSavedIcons path={match.url} />
-                        <Snowman />
+                        <ListFooter />
                     </>
                 )}
                 emptyRender={() => "No sessions to display."}

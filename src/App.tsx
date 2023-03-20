@@ -10,7 +10,7 @@ import {
     setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { informationCircleOutline, megaphoneOutline, timeOutline } from 'ionicons/icons';
+import { bookmarkOutline, informationCircleOutline, megaphoneOutline } from 'ionicons/icons';
 import { QueryClientProvider } from 'react-query';
 import SchedulePage from './pages/SchedulePage';
 import SessionPage from './pages/SessionPage';
@@ -26,23 +26,23 @@ const App = () => (
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
-                        <Route path="/:tab(schedule)" component={SchedulePage} exact={true} />
-                        <Route path="/:tab(schedule)/:id" component={SessionPage} exact={true} />
                         <Route path="/:tab(sessions)" component={SessionsPage} exact={true} />
                         <Route path="/:tab(sessions)/:id" component={SessionPage} exact={true} />
+                        <Route path="/:tab(schedule)" component={SchedulePage} exact={true} />
+                        <Route path="/:tab(schedule)/:id" component={SessionPage} exact={true} />
                         <Route path="/:tab(about)" component={AboutPage} exact={true} />
-                        <Redirect exact from="/" to="/schedule" />
+                        <Redirect exact from="/" to="/sessions" />
                     </IonRouterOutlet>
 
                     <IonTabBar slot="bottom">
-                        <IonTabButton tab="schedule" href="/schedule">
-                            <IonIcon icon={timeOutline} />
-                            <IonLabel>Schedule</IonLabel>
-                        </IonTabButton>
-
                         <IonTabButton tab="sessions" href="/sessions">
                             <IonIcon icon={megaphoneOutline} />
                             <IonLabel>Sessions</IonLabel>
+                        </IonTabButton>
+
+                        <IonTabButton tab="schedule" href="/schedule">
+                            <IonIcon icon={bookmarkOutline} />
+                            <IonLabel>Schedule</IonLabel>
                         </IonTabButton>
 
                         <IonTabButton tab="about" href="/about">

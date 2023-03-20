@@ -1,5 +1,5 @@
 import StandardPage from '../components/StandardPage';
-import Snowman from '../components/Snowman';
+import ListFooter from '../components/ListFooter';
 import QueryResultDisplay from '../components/QueryResultDisplay';
 import SessionList from '../components/SessionList';
 import useSavedSessions from '../hooks/useSavedSessions';
@@ -28,7 +28,7 @@ const SchedulePage = ({ match }: SchedulePageProps) => {
                 successRender={() => (
                     <>
                         <SessionList timeSlots={timeSlots} path={match.url} />
-                        <Snowman />
+                        <ListFooter />
                     </>
                 )}
                 emptyRender={() => (

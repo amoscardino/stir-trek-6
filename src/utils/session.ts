@@ -1,18 +1,16 @@
 import {
-    barChartOutline,
-    bugOutline,
+    appsOutline,
+    brushOutline,
+    buildOutline,
+    bulbOutline,
+    businessOutline,
     calendarClearOutline,
     cloudOutline,
     codeSlashOutline,
-    colorPaletteOutline,
-    constructOutline,
-    diceOutline,
-    gitPullRequestOutline,
-    hardwareChipOutline,
-    infiniteOutline,
-    lockClosedOutline,
-    peopleOutline,
-    phonePortraitOutline
+    extensionPuzzleOutline,
+    flaskOutline,
+    shieldOutline,
+    wifiOutline
 } from "ionicons/icons";
 import { Session } from "../api/types/stirTrek";
 
@@ -21,32 +19,39 @@ const getIcon = (session: Session): string => {
         return calendarClearOutline;
 
     switch (session.categories[0].toLowerCase()) {
-        case 'app dev':
-            return gitPullRequestOutline;
-        case 'architecture / patterns':
-            return constructOutline;
-        case 'cloud / infrastructure':
+        case 'Application Languages, Frameworks, Fundamentals'.toLowerCase():
+            return extensionPuzzleOutline;
+
+        case 'Architecture, Patterns'.toLowerCase():
+            return buildOutline;
+
+        case 'Cloud, Infra, DevOps'.toLowerCase():
             return cloudOutline;
-        case 'data / ai':
-            return barChartOutline;
-        case 'design':
-            return colorPaletteOutline;
-        case 'devops':
-            return infiniteOutline;
-        case 'iot / maker':
-            return hardwareChipOutline;
-        case 'misc *.*':
-            return diceOutline;
-        case 'mobile / client':
-            return phonePortraitOutline;
-        case 'professional skills / soft skills':
-            return peopleOutline;
-        case 'security':
-            return lockClosedOutline;
-        case 'testing / quality':
-            return bugOutline;
-        case 'web':
+
+        case 'Data, AI, ML'.toLowerCase():
+            return bulbOutline;
+
+        case 'Design, Product Strategy'.toLowerCase():
+            return brushOutline;
+
+        case 'Full Stack Web Development'.toLowerCase():
             return codeSlashOutline;
+
+        case 'IoT, Home Automation, Maker Topics'.toLowerCase():
+            return wifiOutline;
+
+        case 'Mobile & Desktop App Development'.toLowerCase():
+            return appsOutline;
+
+        case 'Professional Skills, Leadership, Business'.toLowerCase():
+            return businessOutline;
+
+        case 'Security'.toLowerCase():
+            return shieldOutline;
+
+        case 'Software Quality - Testing, Process, Code Reviews, etc.'.toLowerCase():
+            return flaskOutline;
+
         default:
             return calendarClearOutline;
     }

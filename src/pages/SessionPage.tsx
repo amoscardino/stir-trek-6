@@ -1,5 +1,5 @@
 import StandardPage from '../components/StandardPage';
-import Snowman from '../components/Snowman';
+import ListFooter from '../components/ListFooter';
 import { RouteComponentProps } from 'react-router';
 import useSession from '../hooks/useSession';
 import QueryResultDisplay from '../components/QueryResultDisplay';
@@ -29,7 +29,7 @@ const SessionPage = ({ match }: SessionPageProps) => {
                     <>
                         <SessionDetails session={session} />
 
-                        <Snowman />
+                        <ListFooter />
                     </>
                 )}
                 errorMessage="Unable to load session."

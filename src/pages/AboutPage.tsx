@@ -8,7 +8,7 @@ import {
     IonLabel
 } from '@ionic/react';
 import StandardPage from '../components/StandardPage';
-import Snowman from '../components/Snowman';
+import ListFooter from '../components/ListFooter';
 import icon from '../assets/icon.png'
 import './AboutPage.styles.css';
 
@@ -79,7 +79,7 @@ const AboutPage = () => (
             </IonItem>
         </IonCard>
 
-        <Snowman />
+        <ListFooter />
     </StandardPage>
 );
 

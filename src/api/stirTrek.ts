@@ -55,22 +55,6 @@ const getData = async (): Promise<any[]> => {
 
 const getTheatres = (room: string): number[] => {
     switch (room.toLowerCase()) {
-        case 'cgi':
-            return [4, 5, 6, 7, 8, 9];
-        case 'upstart':
-            return [1, 2, 3];
-        case 'revel it':
-            return [10, 11, 15];
-        case 'cas':
-            return [12, 13, 14];
-        case 'dmg':
-            return [16, 21];
-        case 'daugherty':
-            return [17, 20];
-        case 'impact.com':
-            return [23, 24, 25, 26, 27];
-        case 'aware':
-            return [18, 19, 28];
         default:
             return [];
     }
@@ -78,22 +62,6 @@ const getTheatres = (room: string): number[] => {
 
 const getSpeakerTheatre = (room: string): number | null => {
     switch (room.toLowerCase()) {
-        case 'cgi':
-            return 4;
-        case 'upstart':
-            return 3;
-        case 'revel it':
-            return 15;
-        case 'cas':
-            return 14;
-        case 'dmg':
-            return 16;
-        case 'daugherty':
-            return 17;
-        case 'impact.com':
-            return 27;
-        case 'aware':
-            return 29;
         default:
             return null;
     }
@@ -187,4 +155,3 @@ export {
     getSession,
     clearApiCache
 };
-
