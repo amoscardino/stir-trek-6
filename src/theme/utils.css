@@ -14,6 +14,13 @@
     text-decoration: underline;
 }
 
+.two-line-truncate {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 /* Fix for refresher being hidden by the toolbar */
 ion-app.ios ion-refresher.refresher-active {
     z-index: 1;

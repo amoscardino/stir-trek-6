@@ -23,8 +23,8 @@ const SessionListItem = ({ session, showSavedIcon, hideLines, path }: SessionLis
                 color="primary"
             />
 
-            <IonLabel>
-                <h2>
+            <IonLabel className="ion-text-wrap">
+                <h2 className="two-line-truncate">
                     {session.title}
                 </h2>
 
