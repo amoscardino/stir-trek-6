@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Stir Trek</string>
-    <string name="title_activity_main">Stir Trek</string>
-    <string name="package_name">com.moscardino.stirtrek6</string>
-    <string name="custom_url_scheme">com.moscardino.stirtrek6</string>
-</resources>

@@ -11,8 +11,8 @@ interface SchedulePageProps extends RouteComponentProps { }
 const SchedulePage = ({ match }: SchedulePageProps) => {
     const { timeSlots, isSuccess, isLoading, isError, refresh } = useSavedSessions();
 
-    useIonViewDidEnter(async () => {
-        await refresh();
+    useIonViewDidEnter(() => {
+        refresh();
     });
 
     return (
