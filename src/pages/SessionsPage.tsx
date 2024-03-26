@@ -11,8 +11,8 @@ interface SessionsPageProps extends RouteComponentProps { }
 const SessionsPage = ({ match }: SessionsPageProps) => {
     const { timeSlots, isSuccess, isLoading, isError, refresh } = useSessions();
 
-    useIonViewDidEnter(async () => {
-        await refresh();
+    useIonViewDidEnter(() => {
+        refresh();
     });
 
     return (
