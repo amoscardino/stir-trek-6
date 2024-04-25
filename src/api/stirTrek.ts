@@ -1,4 +1,4 @@
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import {
     addHours,
     formatISO,
@@ -20,9 +20,9 @@ const SCHEDULE_URL = process.env.REACT_APP_SCHEDULE_URL || '';
 const SESSIONS_URL = process.env.REACT_APP_SESSIONS_URL || '';
 
 const getData = async (): Promise<any[]> => {
-    const { value: cacheDate } = await Storage.get({ key: CACHE_KEY_DATE });
-    const { value: scheduleCacheData } = await Storage.get({ key: CACHE_KEY_SCHEDULE });
-    const { value: sessionCacheData } = await Storage.get({ key: CACHE_KEY_SESSIONS });
+    const { value: cacheDate } = await Preferences.get({ key: CACHE_KEY_DATE });
+    const { value: scheduleCacheData } = await Preferences.get({ key: CACHE_KEY_SCHEDULE });
+    const { value: sessionCacheData } = await Preferences.get({ key: CACHE_KEY_SESSIONS });
 
     if (cacheDate && cacheDate.length > 0
         && scheduleCacheData && scheduleCacheData.length > 0
@@ -46,9 +46,9 @@ const getData = async (): Promise<any[]> => {
     const scheduleData = await scheduleResponse.json();
     const sessionData = await sessionsResponse.json();
 
-    await Storage.set({ key: CACHE_KEY_DATE, value: formatISO(new Date()) });
-    await Storage.set({ key: CACHE_KEY_SCHEDULE, value: JSON.stringify(scheduleData) });
-    await Storage.set({ key: CACHE_KEY_SESSIONS, value: JSON.stringify(sessionData) });
+    await Preferences.set({ key: CACHE_KEY_DATE, value: formatISO(new Date()) });
+    await Preferences.set({ key: CACHE_KEY_SCHEDULE, value: JSON.stringify(scheduleData) });
+    await Preferences.set({ key: CACHE_KEY_SESSIONS, value: JSON.stringify(sessionData) });
 
     return [scheduleData, sessionData];
 };
@@ -192,9 +192,9 @@ const getSession = async (id: string): Promise<Session> => {
 };
 
 const clearApiCache = async () => {
-    await Storage.remove({ key: CACHE_KEY_DATE });
-    await Storage.remove({ key: CACHE_KEY_SCHEDULE });
-    await Storage.remove({ key: CACHE_KEY_SESSIONS });
+    await Preferences.remove({ key: CACHE_KEY_DATE });
+    await Preferences.remove({ key: CACHE_KEY_SCHEDULE });
+    await Preferences.remove({ key: CACHE_KEY_SESSIONS });
 };
 
 export {
