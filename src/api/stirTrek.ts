@@ -55,6 +55,30 @@ const getData = async (): Promise<any[]> => {
 
 const getTheatres = (room: string): number[] => {
     switch (room.toLowerCase()) {
+        case 'clone':
+            return [4, 5, 6, 7, 8, 9];
+
+        case 'sith':
+            return [1, 2, 3];
+
+        case 'new hope':
+            return [10, 11, 15];
+
+        case 'empire':
+            return [12, 13, 14];
+
+        case 'jedi':
+            return [16, 21];
+
+        case 'force awakens':
+            return [17, 20];
+
+        case 'last jedi':
+            return [23, 24, 25, 26, 27];
+
+        case 'skywalker':
+            return [18, 19, 28];
+
         default:
             return [];
     }
@@ -62,6 +86,30 @@ const getTheatres = (room: string): number[] => {
 
 const getSpeakerTheatre = (room: string): number | null => {
     switch (room.toLowerCase()) {
+        case 'clone':
+            return 4;
+
+        case 'sith':
+            return 3;
+
+        case 'new hope':
+            return 15;
+
+        case 'empire':
+            return 14;
+
+        case 'jedi':
+            return 16;
+
+        case 'force awakens':
+            return 17;
+
+        case 'last jedi':
+            return 27;
+
+        case 'skywalker':
+            return 28;
+
         default:
             return null;
     }
